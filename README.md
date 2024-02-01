@@ -1,6 +1,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/ValManP/devops-for-programmers-project-76/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ValManP/devops-for-programmers-project-76/actions)
 
+https://www.valman.info
+
 ## Requirements
 
 - ansible

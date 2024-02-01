@@ -1,0 +1,17 @@
+- hosts: all
+  tasks:
+    - name: Create .env file
+      ansible.builtin.template:
+        src: .env.j2
+        dest: .env
+        mode: '0644'
+
+    - name: Start redmine container
+      community.docker.docker_container:
+        env_file: .env
+        image: 'redmine:latest'
+        name: redmine
+        ports: "80:3000"
+        restart_policy: always
+        state: started
+      become: true
