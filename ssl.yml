@@ -1,25 +1,5 @@
 - hosts: all
   tasks:
-    - name: Create .env file
-      ansible.builtin.template:
-        src: .env.j2
-        dest: .env
-        mode: '0644'
-
-    - name: Create docker network
-      community.docker.docker_network:
-        name: app_network
-
-    - name: Start redmine container
-      community.docker.docker_container:
-        env_file: .env
-        image: 'redmine:latest'
-        name: redmine
-        restart_policy: always
-        state: started
-        networks:
-          - name: app_network
-
     - name: Create Nginx config directory
       ansible.builtin.file:
         path: /etc/nginx
@@ -65,8 +45,3 @@
         volumes:
           - /etc/nginx/default.conf:/etc/nginx/conf.d/default.conf
           - /etc/ssl/:/ssl/certs
-
-- hosts: webservers
-  roles:
-    - datadog.datadog
-  become: yes

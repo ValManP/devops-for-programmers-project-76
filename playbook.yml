@@ -1,7 +1,26 @@
 - hosts: all
+  tasks:
+    - name: Create .env file
+      ansible.builtin.template:
+        src: .env.j2
+        dest: .env
+        mode: '0644'
 
-- name: Include setup.yml
-  ansible.builtin.import_playbook: setup.yml
+    - name: Create docker network
+      community.docker.docker_network:
+        name: app_network
 
-- name: Include deploy.yml
-  ansible.builtin.import_playbook: deploy.yml
+    - name: Start redmine container
+      community.docker.docker_container:
+        env_file: .env
+        image: 'redmine:latest'
+        name: redmine
+        restart_policy: always
+        state: started
+        networks:
+          - name: app_network
+
+- hosts: webservers
+  roles:
+    - datadog.datadog
+  become: yes
