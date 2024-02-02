@@ -65,3 +65,8 @@
         volumes:
           - /etc/nginx/default.conf:/etc/nginx/conf.d/default.conf
           - /etc/ssl/:/ssl/certs
+
+- hosts: webservers
+  roles:
+    - datadog.datadog
+  become: yes
